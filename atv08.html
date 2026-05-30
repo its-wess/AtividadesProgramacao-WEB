@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Exercício 8</title>
+</head>
+<body>
+
+    <h1 id="titulo-principal">Título</h1>
+
+    <button id="btn-ativar">Ativar</button>
+
+    <div id="painel">Painel</div>
+
+    <form id="form-login">
+        <button type="submit">Enviar</button>
+    </form>
+
+    <ul id="lista-tecnologias"></ul>
+
+    <table id="tabela-dados">
+        <tr>
+            <td><button class="btn-excluir">Excluir</button></td>
+        </tr>
+    </table>
+
+    <script>
+        const multiplicar = (a, b) => a * b;
+        console.log(multiplicar(2, 5));
+
+        const usuario = { nome: 'Ana', idade: 25, cidade: 'Teresina' };
+        const { nome, cidade } = usuario;
+        console.log(nome, cidade);
+
+        const produto = 'Teclado';
+        const preco = 150;
+        console.log(`O produto ${produto} custa R$ ${preco}`);
+
+        function saudacao(nome = "Visitante") {
+            return `Olá, ${nome}!`;
+        }
+        console.log(saudacao());
+
+        const numeros = [1, 2, 3, 4, 5, 6, 7, 8];
+        console.log(numeros.filter(numero => numero % 2 === 0));
+
+        const valores = [10, 20, 30];
+        console.log(valores.map(valor => valor * 2));
+
+        const precos = [10.5, 20.0, 15.5];
+        console.log(precos.reduce((total, preco) => total + preco, 0));
+
+        const usuarios = [
+            { id: 1, role: 'user' },
+            { id: 2, role: 'admin' },
+            { id: 3, role: 'user' }
+        ];
+        console.log(usuarios.find(usuario => usuario.role === 'admin'));
+
+        const notas = [8, 9, 7.5, 10];
+        console.log(notas.every(nota => nota >= 7));
+
+        document.getElementById("titulo-principal").textContent = "Sistema Inicializado";
+
+        document.getElementById("btn-ativar").addEventListener("click", () => {
+            document.getElementById("painel").classList.add("ativo");
+            console.log("Classe ativo adicionada");
+        });
+
+        document.getElementById("form-login").addEventListener("submit", (event) => {
+            event.preventDefault();
+            console.log("Formulário enviado sem recarregar");
+        });
+
+        const techs = ['HTML', 'CSS', 'JavaScript'];
+        const lista = document.getElementById("lista-tecnologias");
+
+        techs.forEach(tech => {
+            const li = document.createElement("li");
+            li.textContent = tech;
+            lista.appendChild(li);
+        });
+
+        document.getElementById("tabela-dados").addEventListener("click", (event) => {
+            if (event.target.classList.contains("btn-excluir")) {
+                console.log("Botão excluir clicado");
+            }
+        });
+
+        const carregarDados = new Promise((resolve) => {
+            setTimeout(() => {
+                resolve("Dados carregados");
+            }, 2000);
+        });
+
+        carregarDados.then(resultado => {
+            console.log(resultado);
+        });
+
+        async function buscarPostComErro() {
+            try {
+                const resposta = await fetch("https://jsonplaceholder.typicode.com/posts/1");
+                const dados = await resposta.json();
+
+                console.log(dados.title);
+            } catch (erro) {
+                console.log("Erro:", erro);
+            }
+        }
+
+        buscarPostComErro();
+
+        fetch("https://jsonplaceholder.typicode.com/posts", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                title: "Meu Título",
+                body: "Meu Conteúdo",
+                userId: 1
+            })
+        })
+        .then(resposta => resposta.json())
+        .then(dados => console.log(dados));
+    </script>
+
+</body>
+</html>
